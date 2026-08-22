@@ -1,21 +1,25 @@
-# Next.js Playground
+This is where I'm building out different projects for learning about interacting with meteorology data. The different related applications will be found in the `apps` folder.
 
-This playground is used by the DX team to explore, test, and demo new Next.js features. It serves as a starting point for writing documentation and helps us understand features, identify bugs, and provide feedback to the Next.js team.
+# Applications
 
-## Running Locally
+## UI
 
-1. Install dependencies:
+NextJS frontend for interacting with and visualizing data.
 
-```sh
-pnpm install
-```
+## API
 
-2. Start the dev server:
+Flask backend for interacting with different external APIs or local data and doing different ML/data handling tasks.
 
-```sh
-pnpm dev
-```
+# Projects
 
-## Documentation
+## Project 1: Fetching historal HRRR data from NOAA
 
-https://nextjs.org/docs
+### Goal: Explore historal HRRR data
+
+Download an HRRR forecast for a specified date and:
+
+- plot temperature
+- plot wind
+- calculate CAPE
+- calculate dewpoint
+- plot precipitation
