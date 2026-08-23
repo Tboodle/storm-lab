@@ -1,48 +1,27 @@
-import db from '#/lib/db';
-import { Boundary } from '#/ui/boundary';
-import { LinkStatus } from '#/ui/link-status';
-import Link from 'next/link';
+import { AppSidebar } from "@/components/AppSidebar"
+import { Separator } from "@/components/ui/separator"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
 
 export default function Page() {
-  const demos = db.demo.findMany();
   return (
-    <Boundary
-      label="Examples"
-      animateRerendering={false}
-      kind="solid"
-      className="flex flex-col gap-9"
-    >
-      {demos.map((section) => {
-        return (
-          <div key={section.name} className="flex flex-col gap-3">
-            <div className="font-mono text-xs font-semibold tracking-wider text-gray-700 uppercase">
-              {section.name}
-            </div>
-
-            <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-              {section.items.map((item) => {
-                return (
-                  <Link
-                    href={`/${item.slug}`}
-                    key={item.name}
-                    className="group flex flex-col gap-1 rounded-lg bg-gray-900 px-5 py-3 hover:bg-gray-800"
-                  >
-                    <div className="flex items-center justify-between font-medium text-gray-200 group-hover:text-gray-50">
-                      {item.name} <LinkStatus />
-                    </div>
-
-                    {item.description ? (
-                      <div className="line-clamp-3 text-[13px] text-gray-500 group-hover:text-gray-300">
-                        {item.description}
-                      </div>
-                    ) : null}
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
-    </Boundary>
-  );
+    <div className="px-4">
+      <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+        <div className="flex items-center gap-2">
+          <SidebarTrigger className="-ml-1" />
+          <Separator
+            orientation="vertical"
+            className="mr-2 data-[orientation=vertical]:h-4"
+          />
+          <h1 className="text-xl">Home</h1>
+        </div>
+      </header>
+      <div className="font-bold">
+        Click a project in the sidebar to see what I&apos;ve done
+      </div>
+    </div>
+  )
 }

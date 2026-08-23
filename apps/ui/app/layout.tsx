@@ -1,55 +1,47 @@
-import '#/styles/globals.css';
+import { Geist, Geist_Mono, Inter } from "next/font/google"
 
-import db from '#/lib/db';
-import Byline from '#/ui/byline';
-import { GlobalNav } from '#/ui/global-nav';
-import { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import "./globals.css"
+import { ThemeProvider } from "@/components/ThemeProvider"
+import { cn } from "@/lib/utils"
+import { AppSidebar } from "@/components/AppSidebar"
+import {
+  SidebarProvider,
+  SidebarInset,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
+import { Separator } from "@base-ui/react"
 
-const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
-
-export const metadata: Metadata = {
-  title: { default: 'Next.js Playground', template: '%s | Next.js Playground' },
-  metadataBase: new URL('https://app-router.vercel.app'),
-  description:
-    'A playground to explore Next.js features such as nested layouts, instant loading states, streaming, and component level data fetching.',
-  openGraph: {
-    title: 'Next.js Playground',
-    description:
-      'A playground to explore Next.js features such as nested layouts, instant loading states, streaming, and component level data fetching.',
-    images: [`/api/og?title=Next.js Playground`],
-  },
-  twitter: { card: 'summary_large_image' },
-};
+const fontMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+})
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
-  const demos = db.demo.findMany();
+}: Readonly<{
+  children: React.ReactNode
+}>) {
   return (
-    <html lang="en" className="[color-scheme:dark]">
-      <body
-        className={`overflow-y-scroll bg-gray-950 font-sans ${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <div className="fixed top-0 z-10 flex w-full flex-col border-b border-gray-800 bg-black lg:bottom-0 lg:z-auto lg:w-72 lg:border-r lg:border-b-0 lg:border-gray-800">
-          <GlobalNav items={demos} />
-        </div>
-
-        <div className="lg:pl-72">
-          <div className="mx-auto mt-12 mb-24 max-w-4xl -space-y-[1px] lg:px-8 lg:py-8">
-            {children}
-
-            <Byline />
-          </div>
-        </div>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(
+        "antialiased",
+        fontMono.variable,
+        "font-sans",
+        inter.variable
+      )}
+    >
+      <body>
+        <ThemeProvider>
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>{children}</SidebarInset>
+          </SidebarProvider>
+        </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }
